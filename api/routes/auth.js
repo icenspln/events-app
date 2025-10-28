@@ -6,6 +6,7 @@ const router = express.Router();
 
 router.post(
   "/signup",
+
   [body("username").notEmpty().escape(), body("password").isLength({ min: 8 })],
   signup
 );
