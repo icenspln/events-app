@@ -1,20 +1,8 @@
-const sequelize = require("../config/database");
-const { Sequelize, DataTypes } = require("sequelize");
+const { Schema, model } = require("mongoose");
 
-const User = sequelize.define("User", {
-  username: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  password: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
+const userSchema = new Schema({
+  username: String,
+  password: String,
 });
 
-(async () => {
-  await User.sync();
-  console.log("[DEBUG] model saved");
-})();
-
-module.export = User;
+module.exports = model("User", userSchema);
