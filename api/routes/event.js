@@ -7,11 +7,18 @@ const {
   updateEvent,
   deleteEvent,
 } = require("../controllers/event");
+const authorization = require("../middleware/authorization");
 
 const router = express.Router();
 
+// public routes
+router.get("/", getAllEvents);
+router.get("/:id", param("id").exists().notEmpty(), getEvent);
+
+// private routes
 router.post(
   "/",
+  authorization,
   [
     body("title").notEmpty().escape(),
     body("organizer").notEmpty().escape(),
@@ -23,12 +30,9 @@ router.post(
   createEvent
 );
 
-router.get("/", getAllEvents);
-
-router.get("/:id", param("id").exists().notEmpty(), getEvent);
-
 router.put(
   "/:id",
+  authorization,
   [
     body("title").notEmpty().escape().optional().trim(),
     body("organizer").notEmpty().escape().optional().trim(),
@@ -40,6 +44,11 @@ router.put(
   updateEvent
 );
 
-router.delete("/:id", param("id").exists().notEmpty(), deleteEvent);
+router.delete(
+  "/:id",
+  authorization,
+  param("id").exists().notEmpty(),
+  deleteEvent
+);
 
 module.exports = router;

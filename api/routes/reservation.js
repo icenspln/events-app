@@ -1,3 +1,5 @@
+const { body, param } = require("express-validator");
+const router = require("express").Router();
 const {
   createReservation,
   getReservation,
@@ -5,11 +7,9 @@ const {
   updateReservation,
   deleteReservation,
 } = require("../controllers/reservation");
+const authorization = require("../middleware/authorization");
 
-const { body, param } = require("express-validator");
-
-const router = require("express").Router();
-
+// public routes
 router.post(
   "/",
   [
@@ -23,10 +23,20 @@ router.post(
   ],
   createReservation
 );
-router.get("/", getAllReservations);
-router.get("/:id", param("id").exists().notEmpty(), getReservation);
+
+// private routes
+router.get("/", authorization, getAllReservations);
+
+router.get(
+  "/:id",
+  authorization,
+  param("id").exists().notEmpty(),
+  getReservation
+);
+
 router.put(
   "/:id",
+  authorization,
   [
     param("id").exists().notEmpty(),
     body(["firstName", "lastName", "phone", "email", "eventId"])
@@ -39,6 +49,12 @@ router.put(
   ],
   updateReservation
 );
-router.delete("/:id", param("id").exists().notEmpty(), deleteReservation);
+
+router.delete(
+  "/:id",
+  authorization,
+  param("id").exists().notEmpty(),
+  deleteReservation
+);
 
 module.exports = router;
