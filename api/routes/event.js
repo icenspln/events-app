@@ -30,11 +30,11 @@ router.get("/:id", param("id").exists().notEmpty(), getEvent);
 router.put(
   "/:id",
   [
-    body("title").notEmpty().escape().optional(),
-    body("organizer").notEmpty().escape().optional(),
-    body("description").notEmpty().escape().optional(),
-    body("startDate").notEmpty().escape().optional(),
-    body("duration").notEmpty().escape().optional(),
+    body("title").notEmpty().escape().optional().trim(),
+    body("organizer").notEmpty().escape().optional().trim(),
+    body("description").notEmpty().escape().optional().trim(),
+    body("startDate").notEmpty().escape().optional().trim(),
+    body("duration").notEmpty().escape().optional().trim(),
     body("photos").isArray().optional(),
   ],
   updateEvent
