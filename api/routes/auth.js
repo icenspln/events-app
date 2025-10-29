@@ -7,12 +7,19 @@ const router = express.Router();
 router.post(
   "/signup",
 
-  [body("username").notEmpty().escape(), body("password").isLength({ min: 8 })],
+  [
+    body("username").notEmpty().escape(),
+    body("password").isLength({ min: 8 }).isStrongPassword(),
+  ],
   signup
 );
+
 router.get(
   "/login",
-  [body("username").notEmpty().escape(), body("password").isLength({ min: 8 })],
+  [
+    body("username").notEmpty().escape().trim(),
+    body("password").isLength({ min: 8 }).isStrongPassword(),
+  ],
   login
 );
 
