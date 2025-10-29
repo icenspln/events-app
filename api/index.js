@@ -3,6 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const auth = require("./routes/auth");
 const event = require("./routes/event");
+const reservation = require("./routes/reservation");
 const { errorHandler } = require("./helpers");
 
 const app = express();
@@ -10,6 +11,7 @@ const app = express();
 app.use(express.json());
 app.use("/api/auth", auth);
 app.use("/api/event", event);
+app.use("/api/reservation", reservation);
 app.use(errorHandler);
 
 mongoose
