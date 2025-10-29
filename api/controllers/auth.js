@@ -7,7 +7,6 @@ const signup = async (req, res) => {
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
-    console.log("[DEBUG]: ", errors.array());
     return res.status(400).json({ success: false, message: "Signup failed!" });
   }
 
@@ -35,7 +34,6 @@ const login = async (req, res) => {
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
-    console.log("[DEBUG]: ", errors.array());
     return res.status(400).json({ success: false, message: "login failed!" });
   }
   try {
