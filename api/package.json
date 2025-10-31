@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "node --watch ."
+    "dev": "bash check.sh"
   },
   "keywords": [],
   "author": "",
