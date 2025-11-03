@@ -14,7 +14,7 @@ router.post(
   signup
 );
 
-router.get(
+router.post(
   "/login",
   [
     body("username").notEmpty().escape().trim(),
