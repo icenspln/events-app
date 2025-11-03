@@ -32,7 +32,7 @@ const onFormSubmit = async (e) => {
     }
     catch (err) {
       console.log(err)
-      toast.add({ severity: 'error', summary: err.response.data.message, life: 3000 })
+      toast.add({ severity: 'error', summary: err.response.data.message || "Failed!", life: 3000 })
     } finally {
       router.push("/")
     }
@@ -43,10 +43,10 @@ const onFormSubmit = async (e) => {
 
 <template>
   <div>
-    <h3 class="text-2xl ">Sign in</h3>
+    <h3 class="text-2xl ">Login</h3>
     <br>
 
-    <Form v-slot="$form" :resolver="resolver" :initialValues="initialValues" @submit="onFormSubmit"
+    <Form autocomplete="on" v-slot="$form" :resolver="resolver" :initialValues="initialValues" @submit="onFormSubmit"
       class="flex justify-center flex-col gap-4">
       <div class="flex flex-col gap-1">
         <InputText name="username" type="text" placeholder="Username" />
