@@ -41,12 +41,12 @@ const login = async (req, res) => {
     const user = await User.findOne({ username: username });
     if (!user)
       // username not found
-      return res.status(401).send();
+      return res.status(401).json({ success: false, message: "login failed!" });
     // return res.status(401).json({ success: false, message: "Unauthorized!" });
 
     if (!(await bcrypt.compare(password, user.password)))
       // username found but wrong pass
-      return res.status(401).send();
+      return res.status(401).json({ success: false, message: "login failed!" });
     //return res.status(401).json({ success: false, message: "Unauthorized!" });
 
     // Valid username & password
