@@ -1,7 +1,7 @@
 <script setup>
 import Axios from '@/api/Axios';
 import { useToast } from 'primevue';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import Button from "primevue/button"
 import EditEvent from '@/components/EditEvent.vue';
@@ -14,7 +14,13 @@ const route = useRoute()
 const loading = ref(true);
 const event = ref(null);
 const fetchError = ref(false);
-onMounted(async () => {
+const outdated = ref(false);
+
+watch(outdated, async () => {
+  // reset outdated to false
+  // refetch
+  console.log("[DEBUG] watch callback triggered")
+  outdated.value = false
   try {
     const res = await Axios.get(`/event/${route.params.id}`)
     loading.value = false;
@@ -27,10 +33,19 @@ onMounted(async () => {
   }
 })
 
+onMounted(async () => {
+  outdated.value = true
+})
+
 // dialogs states
 const editDialogVisible = ref(false);
 const deleteDialogVisible = ref(false);
 
+
+function refresh() {
+  console.log("[DEBUG] refresh executing")
+  outdated.value = true
+}
 
 </script>
 
@@ -93,7 +108,7 @@ const deleteDialogVisible = ref(false);
               Delete
             </Button>
           </div>
-          <EditEvent :event :editDialogVisible @hide-dialog="editDialogVisible = false" />
+          <EditEvent @refetch="refresh" :event :editDialogVisible @hide-dialog="editDialogVisible = false" />
         </article>
       </div>
     </template>

@@ -15,7 +15,7 @@ import { useRoute } from 'vue-router';
 const route = useRoute()
 const toast = useToast()
 
-const emit = defineEmits(["hide-dialog"])
+const emit = defineEmits(["hide-dialog", "refetch"])
 const { event, editDialogVisible } = defineProps(["event", "editDialogVisible"])
 
 const initialValues = computed(() => {
@@ -25,7 +25,7 @@ const initialValues = computed(() => {
     description: event.description,
     startDate: stringToDOM(event.startDate),
     duration: stringToDOM(event.duration),
-    photos: event.photos,
+    // photos: event.photos,
   }
 })
 
@@ -46,16 +46,16 @@ const onFormSubmit = async (e) => {
       const res = await Axios.put(`/event/${route.params.id}`, e.values)
       toast.add({ severity: 'success', summary: res.data.message, life: 3000 })
       emit("hide-dialog");
+      emit("refetch");
+      // reload
+
     }
     catch (err) {
       console.log(err)
       toast.add({ severity: 'error', summary: "Failed!", life: 3000 })
-    } finally {
-      // reload
     }
   }
 };
-
 
 </script>
 
@@ -64,29 +64,29 @@ const onFormSubmit = async (e) => {
     <p class="font-bold text-amber-500 mb-3">submitted data will instantly show on the main site</p>
     <Form v-slot="$form" :resolver :initialValues @submit="onFormSubmit">
       <div class="flex flex-col items-start gap-4 mb-4">
-        <div class="flex flex-col gap-1">
+        <div class="flex flex-col gap-1 w-full">
           <InputText name="title" type="text" placeholder="Title" fluid />
           <Message v-if="$form.title?.invalid" severity="error" size="small" variant="simple">{{
             $form.title.error.message }}</Message>
         </div>
-        <div class="flex flex-col gap-1">
+        <div class="flex flex-col gap-1 w-full">
           <InputText name="organizer" type="text" placeholder="Organizer" fluid />
           <Message v-if="$form.organizer?.invalid" severity="error" size="small" variant="simple">{{
             $form.organizer?.error.message }}</Message>
         </div>
-        <div class="flex flex-col gap-1">
+        <div class="flex flex-col gap-1 w-full">
           <Textarea autoResize name="description" placeholder="Description" />
           <Message v-if="$form.description?.invalid" severity="error" size="small" variant="simple">{{
             $form.description?.error.message }}</Message>
         </div>
 
-        <div class="flex flex-col gap-1">
+        <div class="flex flex-col gap-1 w-full">
           <label for="start-date">Start Date</label>
           <InputText id="start-date" name="startDate" type="date" fluid />
           <Message v-if="$form.startDate?.invalid" severity="error" size="small" variant="simple">{{
             $form.startDate?.error.message }}</Message>
         </div>
-        <div class="flex flex-col gap-1">
+        <div class="flex flex-col gap-1 w-full">
           <label for="duration">Duration</label>
           <InputText id="duration" name="duration" type="date" fluid />
           <Message v-if="$form.duration?.invalid" severity="error" size="small" variant="simple">{{
