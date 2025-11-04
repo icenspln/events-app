@@ -46,7 +46,7 @@ const onFormSubmit = async (e) => {
     <h3 class="text-2xl ">Login</h3>
     <br>
 
-    <Form autocomplete="on" v-slot="$form" :resolver="resolver" :initialValues="initialValues" @submit="onFormSubmit"
+    <Form v-slot="$form" :resolver="resolver" :initialValues="initialValues" @submit="onFormSubmit"
       class="flex justify-center flex-col gap-4">
       <div class="flex flex-col gap-1">
         <InputText name="username" type="text" placeholder="Username" />
@@ -58,7 +58,7 @@ const onFormSubmit = async (e) => {
         <Message v-if="$form.password?.invalid" severity="error" size="small" variant="simple">{{
           $form.password.error?.message }}</Message>
       </div>
-      <Button :disabled="!$form.valid" type="submit" severity="secondary" label="Submit" />
+      <Button :disabled="!$form.valid" type="submit" severity="contrast" label="Submit" />
     </Form>
   </div>
 </template>

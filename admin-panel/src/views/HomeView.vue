@@ -1,6 +1,13 @@
 <script setup>
+import EventsSection from '@/components/EventsSection.vue';
+
 
 </script>
 <template>
-  welcome home
+  <div class="w-full">
+    <EventsSection />
+  </div>
+  <!-- <section>
+    <ReservationsSection />
+  </section> -->
 </template>

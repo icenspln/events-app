@@ -9,11 +9,19 @@ const logout = () => {
   const authStore = useAuthStore()
   authStore.logout()
   router.push({ path: "/auth/login" })
-  toast.add({ severity: 'success', summary: "Logout successfull.", life: 3000 })
+  toast.add({ severity: 'secondary', summary: "Logout successfull.", life: 3000 })
 }
 </script>
 
 <template>
-  <Button severity="danger" @click="logout">Logout</Button>
+
+
+  <Button severity="contrast" @click="logout">
+    <i class="pi pi-sign-out"></i>
+    <span>
+      Logout
+    </span>
+  </Button>
+
 
 </template>
