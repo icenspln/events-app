@@ -1,10 +1,12 @@
 <script setup>
 import Axios from '@/api/Axios';
-import { useToast } from 'primevue';
+import { useConfirm, useToast } from 'primevue';
 import { onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import Button from "primevue/button"
 import EditEvent from '@/components/EditEvent.vue';
+import DeleteEvent from '@/components/DeleteEvent.vue';
+import router from '@/router';
 
 
 const toast = useToast()
@@ -39,7 +41,7 @@ onMounted(async () => {
 
 // dialogs states
 const editDialogVisible = ref(false);
-const deleteDialogVisible = ref(false);
+// const deleteDialogVisible = ref(false);
 
 
 function refresh() {
@@ -47,6 +49,38 @@ function refresh() {
   outdated.value = true
 }
 
+const confirm = useConfirm();
+
+const deleteEvent = () => {
+  confirm.require({
+    message: 'Do you want to delete this event?',
+    header: 'Danger Zone',
+    icon: 'pi pi-info-circle',
+    rejectLabel: 'Cancel',
+    rejectProps: {
+      label: 'Cancel',
+      severity: 'secondary',
+      outlined: true
+    },
+    acceptProps: {
+      label: 'Delete',
+      severity: 'danger'
+    },
+    accept: async () => {
+      try {
+        const res = await Axios.delete(`/event/${route.params.id}`);
+        toast.add({ severity: 'info', summary: 'Confirmed', detail: res.data.message, life: 3000 });
+        router.push("/");
+      } catch (error) {
+        console.log(error.message)
+        toast.add({ severity: "error", life: 3000, summary: "Error deleting event!" })
+      }
+    },
+    reject: () => {
+      toast.add({ severity: 'info', summary: 'Delete cancelled.', life: 3000 });
+    }
+  });
+};
 </script>
 
 <template>
@@ -104,9 +138,7 @@ function refresh() {
             <Button severity="secondary" @click="editDialogVisible = true" class="font-bolder text-amber-500 font-bold">
               Edit
             </Button>
-            <Button severity="danger" @click="deleteDialogVisible = true" class="font-bolder text-rose-400 font-bold">
-              Delete
-            </Button>
+            <DeleteEvent @confirm-delete="deleteEvent" />
           </div>
           <EditEvent @refetch="refresh" :event :editDialogVisible @hide-dialog="editDialogVisible = false" />
         </article>
