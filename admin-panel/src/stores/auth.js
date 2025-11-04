@@ -14,13 +14,17 @@ export const useAuthStore = defineStore("auth", () => {
     state.value.username = response.data.username;
     state.value.token = response.data.token;
     localStorage.setItem("token", state.value.token);
+    let token = localStorage.getItem("token");
+    if (token) Axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     return response;
   }
 
   function logout() {
-    localStorage.removeItem("token");
     state.value.username = null;
     state.value.token = null;
+    localStorage.removeItem("token");
+    delete Axios.defaults.headers.common["Authorization"];
+    console.log("[DEBUG]: ", Axios.defaults.headers);
   }
 
   return { state, login, logout };
