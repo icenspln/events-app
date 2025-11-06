@@ -30,7 +30,7 @@ onMounted(async () => {
   <section class="my-5">
     <div class="flex gap-3 mb-3 justify-between items-center">
       <div>
-        <h2 class="text-xl">
+        <h2 class="text-xl font-bold">
           Events
         </h2>
         <p class="text-amber-500">Events currently being displayed in the main site</p>
@@ -44,8 +44,9 @@ onMounted(async () => {
     <p class="flex justify-center" v-if="loading">
       <i class="pi pi-spin pi-cog" style="font-size: 2rem"></i>
     </p>
+    <p class="text-rose-400" v-if="fetchError">Error fetching events</p>
     <div v-else-if="events.length == 0" class="text-blue-500">There are not events to display!</div>
-    <div v-else-if="events">
+    <div v-else>
       <article v-for="(e) in events" :key="e._id" class="flex justify-start gap-3 items-center">
         <span>
           {{ e._id }}
@@ -74,7 +75,6 @@ onMounted(async () => {
         <hr>
       </article>
     </div>
-    <p class="text-rose-400" v-else>Error fetching events</p>
 
 
 

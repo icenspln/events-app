@@ -26,8 +26,8 @@ const logoutButtonVisible = computed(() => {
     <LogoutButton v-if="logoutButtonVisible" />
     <!-- <p class="text-amber-500">only authorized admins are allowed to proceed</p> -->
   </nav>
-  <main class="flex justify-center min-h-screen bg-gray-100 w-full h-full">
-    <main class="min-h-screen bg-gray-100 px-2 sm:px-6 w-full md:max-w-[768px] mx-auto ">
+  <main class="flex justify-center min-h-screen  w-full h-full">
+    <main class="min-h-screen px-2 sm:px-6 w-full md:max-w-[768px] mx-auto ">
       <RouterView />
     </main>
   </main>
