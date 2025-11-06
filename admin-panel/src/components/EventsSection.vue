@@ -35,7 +35,7 @@ onMounted(async () => {
         </h2>
         <p class="text-amber-500">Events currently being displayed in the main site</p>
       </div>
-      <RouterLink to="">
+      <RouterLink to="/event/new">
         <Button>Create new event</Button>
       </RouterLink>
     </div>

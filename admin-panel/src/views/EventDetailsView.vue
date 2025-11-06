@@ -4,7 +4,7 @@ import { useConfirm, useToast } from 'primevue';
 import { onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import Button from "primevue/button"
-import EditEvent from '@/components/EditEvent.vue';
+import EditEvent from '@/components/UpdateEvent.vue';
 import DeleteEvent from '@/components/DeleteEvent.vue';
 import router from '@/router';
 
