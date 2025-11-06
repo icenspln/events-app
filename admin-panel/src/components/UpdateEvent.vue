@@ -34,7 +34,7 @@ const resolver = ref(zodResolver(
     title: z.string().min(3, { message: 'title is required.' }),
     organizer: z.string().min(2, { message: 'oganizer is required.' }),
     description: z.string().min(3, { message: 'description is required.' }),
-    startDate: iso.date(),
+    startDate: iso.date({ error: "start date is required!" }),
     duration: iso.date({ error: "duration is required!" }),
     // photos: z.array(z.string()).optional()
   })
