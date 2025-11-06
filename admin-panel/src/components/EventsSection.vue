@@ -44,7 +44,7 @@ onMounted(async () => {
     <p class="flex justify-center" v-if="loading">
       <i class="pi pi-spin pi-cog" style="font-size: 2rem"></i>
     </p>
-    <div v-else-if="events.length == 0" class="text-amber-500">There are not events to display!</div>
+    <div v-else-if="events.length == 0" class="text-blue-500">There are not events to display!</div>
     <div v-else-if="events">
       <article v-for="(e) in events" :key="e._id" class="flex justify-start gap-3 items-center">
         <span>
@@ -68,9 +68,9 @@ onMounted(async () => {
             Edit
           </RouterLink>
         </span> -->
-        <span class="font-bolder text-rose-400">
+        <!-- <span class="font-bolder text-rose-400">
           Delete
-        </span>
+        </span> -->
         <hr>
       </article>
     </div>
